@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     private float jumpingPower = 16f;
     private bool jumpQueued = false;
     private bool isFacingRight = true;
+    private Vector2 checkSize = new Vector2(0.90f , 1.0f);
+    public int playerMaxHealth = 7;
+    public int playerHealth = 7;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -22,31 +25,33 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
-        }
-        if(Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
-        }
-        if(Input.GetButtonDown("Jump") && Buffer())
+        } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
         {
             jumpQueued = true;
         }
+        // if(Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
+        // {
+        //     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
+        // }
+        
         if(IsGrounded() && jumpQueued)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             jumpQueued = false;
         }
-        flip();
+        flip(); 
 
         
     }
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        // return Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
+        return Physics2D.OverlapBox(groundCheck.position, checkSize, 0.0f, groundLayer);
     }
     private bool Buffer()
     {
-        return Physics2D.OverlapCircle(bufferCheck.position, 0.2f, groundLayer);
+        // return Physics2D.OverlapCircle(bufferCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapBox(bufferCheck.position, checkSize, 0.0f, groundLayer);
     }
     private void FixedUpdate()
     {
