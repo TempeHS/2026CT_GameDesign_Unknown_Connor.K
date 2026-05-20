@@ -8,8 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpQueued = false;
     private bool isFacingRight = true;
     private Vector2 checkSize = new Vector2(0.90f , 1.0f);
-    public int playerMaxHealth = 7;
-    public int playerHealth = 7;
+    public float playerMaxHealth = 8.0f;
+    public float playerHealth = 8.0f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     // Update is called once per frame
+    void Awake()
+    {
+        playerMaxHealth = 8.0f;
+        playerHealth = 8.0f;
+    }
     void Update()
     {
         
