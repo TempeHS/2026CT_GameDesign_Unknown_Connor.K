@@ -9,7 +9,7 @@ public class HPScript : MonoBehaviour
     private float fillamount;
 
     [SerializeField] private Image HealthPointFill;
-    [SerializeField] private PlayerHealthManager Player;
+    [SerializeField] private PlayerMovement Player;
 
     private void Awake()
     {

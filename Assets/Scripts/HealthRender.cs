@@ -7,7 +7,7 @@ public class HealthRender : MonoBehaviour
     public int cloneID = 1;
     public Transform canvas;
     
-    [SerializeField] private PlayerHealthManager Player;
+    [SerializeField] private PlayerMovement Player;
 
     private float playerMaxHealth;
 
