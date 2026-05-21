@@ -508,7 +508,7 @@ MonoBehaviour:
   healthPoint: {fileID: 1870678760}
   cloneID: 1
   canvas: {fileID: 564208847}
-  Player: {fileID: 1722249560}
+  Player: {fileID: 1722249565}
 --- !u!1 &564208843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1300,7 @@ GameObject:
   - component: {fileID: 1722249562}
   - component: {fileID: 1722249561}
   - component: {fileID: 1722249560}
+  - component: {fileID: 1722249565}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1319,8 +1320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec9a015b848ece4990672a159a9cabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMaxHealth: 0
-  playerHealth: 0
   rb: {fileID: 1722249561}
   groundCheck: {fileID: 345394713}
   bufferCheck: {fileID: 1139350849}
@@ -1472,6 +1471,20 @@ Transform:
   - {fileID: 1139350849}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1722249565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722249559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfffdca7b58e7a64bb313cf9a120d9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMaxHealth: 8
+  playerHealth: 8
 --- !u!1 &1758788406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,7 +1575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cloneID: 0
   HealthPointFill: {fileID: 1758788408}
-  Player: {fileID: 1722249560}
+  Player: {fileID: 1722249565}
 --- !u!1 &1870678760
 GameObject:
   m_ObjectHideFlags: 0
