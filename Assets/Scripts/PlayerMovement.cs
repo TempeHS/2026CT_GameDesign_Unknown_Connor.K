@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
     private int iFrames = 0;
+    private float playerKBTime = 0.0f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        playerKBTime -= Time.deltaTime;
         if (playerHealth > playerMaxHealth)
         {
             playerHealth = playerMaxHealth;
@@ -37,26 +39,29 @@ public class PlayerMovement : MonoBehaviour
         {
             iFrames = 0;
         }
+        if(playerKBTime<=0)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
 
-        horizontal = Input.GetAxisRaw("Horizontal");
+            if(Input.GetButtonDown("Jump") && IsGrounded())
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+            } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
+            {
+                jumpQueued = true;
+            }
+            // if(Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
+            // {
+            //     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
+            // }
+            
+            if(IsGrounded() && jumpQueued)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+                jumpQueued = false;
+            }
+        }
 
-        if(Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
-        } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
-        {
-            jumpQueued = true;
-        }
-        // if(Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
-        // {
-        //     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
-        // }
-        
-        if(IsGrounded() && jumpQueued)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
-            jumpQueued = false;
-        }
         flip(); 
 
         
@@ -80,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
                 Vector2 contactPoint = collision.contacts[0].point;
                 Vector2 pushDirection = (Vector2)transform.position - contactPoint;
                 rb.linearVelocity = Vector2.zero;
+                playerKBTime = 0.5f;
                 rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
 
             }
