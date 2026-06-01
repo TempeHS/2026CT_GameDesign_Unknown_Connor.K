@@ -78,15 +78,18 @@ public class PlayerMovement : MonoBehaviour
             if (child.CompareTag("DamagePlayer") && iFrames <= 0)
             {
                 playerHealth--;
-                iFrames = 50;
+                iFrames = 100;
             }
             if (child.CompareTag("KnockbackPlayer"))
             {
-                Vector2 contactPoint = collision.contacts[0].point;
-                Vector2 pushDirection = (Vector2)transform.position - contactPoint;
+                Vector3 direction = -(collision.transform.position - transform.position).normalized;
+                Vector3 force = direction * 10;
+                // Vector2 contactPoint = collision.contacts[0].point;
+                // Vector2 pushDirection = (Vector2)transform.position - contactPoint;
                 rb.linearVelocity = Vector2.zero;
-                playerKBTime = 0.5f;
-                rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
+                playerKBTime = 0.4f;
+                // rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
+                rb.AddForce(force, ForceMode2D.Impulse);
 
             }
 
@@ -104,7 +107,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        if(playerKBTime<=0)
+        {
+            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        }
     }
     private void flip()
     {
