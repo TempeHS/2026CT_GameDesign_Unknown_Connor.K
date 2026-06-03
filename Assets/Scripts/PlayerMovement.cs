@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 checkSize = new Vector2(0.90f , 1.0f);
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
-    private int iFrames = 0;
-    private float playerKBTime = 0.0f;
+    public int iFrames = 0;
+    public float playerKBTime = 0.0f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -66,35 +66,35 @@ public class PlayerMovement : MonoBehaviour
 
         
     }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        checkTags(collision);
-    }
-    private void checkTags(Collision2D collision)
-    {
-        foreach (Transform child in collision.transform)
-        {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (child.CompareTag("DamagePlayer") && iFrames <= 0)
-            {
-                playerHealth--;
-                iFrames = 100;
-            }
-            if (child.CompareTag("KnockbackPlayer"))
-            {
-                Vector3 direction = -(collision.transform.position - transform.position).normalized;
-                Vector3 force = direction * 10;
-                // Vector2 contactPoint = collision.contacts[0].point;
-                // Vector2 pushDirection = (Vector2)transform.position - contactPoint;
-                rb.linearVelocity = Vector2.zero;
-                playerKBTime = 0.4f;
-                // rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
-                rb.AddForce(force, ForceMode2D.Impulse);
+    // private void OnCollisionStay2D(Collision2D collision)
+    // {
+    //     checkTags(collision);
+    // }
+    // private void checkTags(Collision2D collision)
+    // {
+    //     foreach (Transform child in collision.transform)
+    //     {
+    //         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //         if (child.CompareTag("DamagePlayer") && iFrames <= 0)
+    //         {
+    //             playerHealth--;
+    //             iFrames = 100;
+    //         }
+    //         if (child.CompareTag("KnockbackPlayer"))
+    //         {
+    //             Vector3 direction = -(collision.transform.position - transform.position).normalized;
+    //             Vector3 force = direction * 10;
+    //             // Vector2 contactPoint = collision.contacts[0].point;
+    //             // Vector2 pushDirection = (Vector2)transform.position - contactPoint;
+    //             rb.linearVelocity = Vector2.zero;
+    //             playerKBTime = 0.4f;
+    //             // rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
+    //             rb.AddForce(force, ForceMode2D.Impulse);
 
-            }
+    //         }
 
-        }
-    }
+    //     }
+    // }
     private bool IsGrounded()
     {
         // return Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
