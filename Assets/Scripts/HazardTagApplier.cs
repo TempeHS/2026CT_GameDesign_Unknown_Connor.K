@@ -15,7 +15,7 @@ public class HazardTagApplier : MonoBehaviour
     {
         
     }
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         checkTags(collision);
     }
@@ -33,14 +33,11 @@ public class HazardTagApplier : MonoBehaviour
                 if (child.CompareTag("KnockbackPlayer"))
                 {
                     Vector2 contactPoint = collision.contacts[0].point;
-                    // Vector3 direction = (collision.transform.position - transform.position).normalized;
-                    // Vector3 force = direction * 10;
-                    
+
                     Vector2 pushDirection = ((Vector2)Player.transform.position - contactPoint);
                     rb.linearVelocity = Vector2.zero;
                     Player.playerKBTime = 0.2f;
                     rb.AddForce(pushDirection * 15, ForceMode2D.Impulse);
-                    // rb.AddForce(force, ForceMode2D.Impulse);
 
                 }
 
