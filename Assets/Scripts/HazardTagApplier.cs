@@ -37,7 +37,7 @@ public class HazardTagApplier : MonoBehaviour
                     Vector2 pushDirection = ((Vector2)Player.transform.position - contactPoint);
                     rb.linearVelocity = Vector2.zero;
                     Player.playerKBTime = 0.2f;
-                    rb.AddForce(pushDirection * 15, ForceMode2D.Impulse);
+                    rb.AddForce(pushDirection * 25, ForceMode2D.Impulse);
 
                 }
 
