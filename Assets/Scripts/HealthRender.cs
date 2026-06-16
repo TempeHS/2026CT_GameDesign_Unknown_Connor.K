@@ -44,7 +44,7 @@ public class HealthRender : MonoBehaviour
             GameObject clone = Instantiate(healthPoint, canvas);
             clone.tag = "ToDelete";
             RectTransform rt = clone.GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(((cloneID -1) * 45) + 50, -50);
+            rt.anchoredPosition = new Vector2(((cloneID -1) * 95) + 50, -50);
             foreach (Transform child in clone.transform)
             {
                 if (child.CompareTag("HealthFillUnscripted"))
