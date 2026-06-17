@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpingPower = 16f;
     private bool jumpQueued = false;
     private bool isFacingRight = true;
-    private Vector2 checkSize = new Vector2(0.90f , 1.0f);
+    private Vector2 checkSize = new Vector2(0.7f , 1.0f);
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
     public int iFrames = 0;
