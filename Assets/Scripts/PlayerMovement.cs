@@ -4,10 +4,13 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private float speed = 8f;
-    private float jumpingPower = 16f;
+    private float jumpingPower = 12f;
     private bool jumpQueued = false;
     private bool isFacingRight = true;
-    private Vector2 checkSize = new Vector2(0.7f , 1.0f);
+    private float airTime = 0.0f;
+    private float jumpAnimTime = 0.0f;
+    private Vector2 groundCheckSize = new Vector2(0.45f , 0.1f);
+    private Vector2 queueCheckSize = new Vector2(0.45f, 1.25f);
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
     public int iFrames = 0;
@@ -17,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform bufferCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Animator animator;
 
     // Update is called once per frame
     private void Awake()
@@ -26,7 +30,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        
+        airTime += Time.deltaTime;
+        jumpAnimTime += Time.deltaTime;
         playerKBTime -= Time.deltaTime;
+        
         if (playerHealth > playerMaxHealth)
         {
             playerHealth = playerMaxHealth;
@@ -46,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetButtonDown("Jump") && IsGrounded())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+                jumpAnimTime = 0.0f;
+                animator.SetTrigger("jumpStart");
             } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
             {
                 jumpQueued = true;
@@ -55,14 +65,44 @@ public class PlayerMovement : MonoBehaviour
             //     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
             // }
             
-            if(IsGrounded() && jumpQueued)
+            if(IsGrounded())
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
-                jumpQueued = false;
+                animator.SetBool("isGrounded", true);
+                animator.SetBool("isFalling", false);
+                if (jumpQueued)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+                    jumpQueued = false;
+                    jumpAnimTime= 0.0f;
+                    animator.SetTrigger("jumpStart");
+                }
+                
+                airTime = 0.0f;
+
             }
+            else
+            {
+                animator.SetBool("isGrounded", false);
+            }
+            
+        }
+        if(horizontal != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+        if (airTime > 0.2f) 
+        {
+            animator.SetBool("isFalling", true);
         }
 
-        flip(); 
+
+        flip();
+        
+        Debug.Log(jumpAnimTime);
 
         
     }
@@ -98,12 +138,13 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         // return Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
-        return Physics2D.OverlapBox(groundCheck.position, checkSize, 0.0f, groundLayer);
+        return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0f, groundLayer);
+        
     }
     private bool Buffer()
     {
         // return Physics2D.OverlapCircle(bufferCheck.position, 0.2f, groundLayer);
-        return Physics2D.OverlapBox(bufferCheck.position, checkSize, 0.0f, groundLayer);
+        return Physics2D.OverlapBox(bufferCheck.position, queueCheckSize, 0.0f, groundLayer);
     }
     private void FixedUpdate()
     {
