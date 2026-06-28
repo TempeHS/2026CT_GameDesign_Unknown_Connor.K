@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float airTime = 0.0f;
     private float jumpAnimTime = 0.0f;
     private Vector2 groundCheckSize = new Vector2(0.45f , 0.1f);
-    private Vector2 queueCheckSize = new Vector2(0.45f, 1.25f);
+    private Vector2 queueCheckSize = new Vector2(0.45f, 2f);
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
     public int iFrames = 0;
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
-        if (airTime > 0.2f) 
+        if (airTime > 0.3f) 
         {
             animator.SetBool("isFalling", true);
         }
