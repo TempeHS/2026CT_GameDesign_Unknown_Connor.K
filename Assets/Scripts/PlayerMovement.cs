@@ -9,8 +9,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
     private float airTime = 0.0f;
     private float jumpAnimTime = 0.0f;
+    private bool dashDir = true;
     private Vector2 groundCheckSize = new Vector2(0.45f , 0.1f);
     private Vector2 queueCheckSize = new Vector2(0.45f, 2f);
+    private float dashCD= 0.0f;
+    private float dashTime = 0.0f;
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
     public int iFrames = 0;
@@ -30,9 +33,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        
+        dashTime -= Time.deltaTime;
+        dashCD -= Time.deltaTime;
         airTime += Time.deltaTime;
-        jumpAnimTime += Time.deltaTime;
+        jumpAnimTime -= Time.deltaTime;
+        animator.SetFloat("jumpAnimTime", jumpAnimTime);
         playerKBTime -= Time.deltaTime;
         
         if (playerHealth > playerMaxHealth)
@@ -54,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetButtonDown("Jump") && IsGrounded())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
-                jumpAnimTime = 0.0f;
+                jumpAnimTime = 0.2f;
                 animator.SetTrigger("jumpStart");
             } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
             {
@@ -73,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
                     jumpQueued = false;
-                    jumpAnimTime= 0.0f;
+                    jumpAnimTime= 0.2f;
                     animator.SetTrigger("jumpStart");
                 }
                 
@@ -102,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
         flip();
         
-        Debug.Log(jumpAnimTime);
+        
 
         
     }
@@ -150,7 +155,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if(playerKBTime<=0)
         {
+            if(dashTime>0){
+                rb.linearVelocity = new Vector2(horizontal * speed, 0.0f);
+            }
             rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        }
+        if(Input.GetKey(KeyCode.LeftShift) && dashCD <= 0){
+            
+            Debug.Log("Dash");
+            dashTime= 0.5f;
+            dashCD = 5.0f;
         }
     }
     private void flip()
