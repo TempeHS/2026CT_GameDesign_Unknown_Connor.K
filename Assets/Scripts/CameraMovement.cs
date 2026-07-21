@@ -15,5 +15,9 @@ public class CameraMovement : MonoBehaviour
         
         transform.Translate(Vector3.right * offsetX * Time.deltaTime*5);
         transform.Translate(Vector3.up * offsetY * Time.deltaTime *5);
+        //if(transform.position.y < 2.0f)
+        //{
+        //    transform.position = new Vector3(transform.position.x, 2.0f, transform.position.z);
+        //}
     }
 }
