@@ -9,10 +9,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
     private float airTime = 0.0f;
     private float jumpAnimTime = 0.0f;
-    private bool dashDir = true;
+    private float dashDir = 1;
     private Vector2 groundCheckSize = new Vector2(0.45f , 0.1f);
     private Vector2 queueCheckSize = new Vector2(0.45f, 2f);
-    private float dashCD= 0.0f;
+    public float dashMaxCd = 2.5f;
+    public float dashCD= 0.0f;
     private float dashTime = 0.0f;
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
@@ -93,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if(horizontal != 0)
         {
+            if (dashTime < 0)
+            {
+                dashDir = horizontal;
+            }
             animator.SetBool("isRunning", true);
         }
         else
@@ -142,13 +147,11 @@ public class PlayerMovement : MonoBehaviour
     // }
     private bool IsGrounded()
     {
-        // return Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0f, groundLayer);
         
     }
     private bool Buffer()
     {
-        // return Physics2D.OverlapCircle(bufferCheck.position, 0.2f, groundLayer);
         return Physics2D.OverlapBox(bufferCheck.position, queueCheckSize, 0.0f, groundLayer);
     }
     private void FixedUpdate()
@@ -156,20 +159,25 @@ public class PlayerMovement : MonoBehaviour
         if(playerKBTime<=0)
         {
             if(dashTime>0){
-                rb.linearVelocity = new Vector2(horizontal * speed, 0.0f);
+                rb.linearVelocity = new Vector2(dashDir * 20, 0.1f);
             }
-            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+            else
+            {
+                rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+            }
+            
         }
         if(Input.GetKey(KeyCode.LeftShift) && dashCD <= 0){
             
             Debug.Log("Dash");
-            dashTime= 0.5f;
-            dashCD = 5.0f;
+            animator.SetTrigger("dash");
+            dashTime = 0.25f;
+            dashCD = 2.0f;
         }
     }
     private void flip()
     {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if ((isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) && dashTime <=0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
