@@ -159,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         if(playerKBTime<=0)
         {
             if(dashTime>0){
-                rb.linearVelocity = new Vector2(dashDir * 20, 0.1f);
+                rb.linearVelocity = new Vector2(dashDir * 30, 0.1f);
             }
             else
             {
@@ -186,4 +186,41 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+        private void OnCollisionEnter2D(Collision2D collision){
+            Vector2 contactPoint = collision.contacts[0].point;
+            Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
+            HazardTagApplier enemy = collision.gameObject.GetComponent<HazardTagApplier>();
+            if(enemy != null)
+            {
+               Debug.Log("owchies"); 
+               playerHealth -= enemy.damage;
+               Player.iFrames = 100;
+               if(enemy.kbAmount>0){
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(pushDirection * enemy.kbAmount*3, ForceMode2D.Impulse);
+               }
+               if(enemy.willStun){
+                playerKBTime = 0.2f;
+               }
+             
+            }
+        }
 }
+//     Rigidbody2D rb = Player.GetComponent<Rigidbody2D>();
+                //     if (child.CompareTag("DamagePlayer") && Player.iFrames <= 0)
+                //     {
+                //         Player.playerHealth--;
+                //         Player.iFrames = 100;
+                //     }
+                //     if (child.CompareTag("KnockbackPlayer"))
+                //     {
+                //         Vector2 contactPoint = collision.contacts[0].point;
+
+                //         Vector2 pushDirection = ((Vector2)Player.transform.position - contactPoint);
+                //         rb.linearVelocity = Vector2.zero;
+                //         Player.playerKBTime = 0.2f;
+                //         rb.AddForce(pushDirection * 12, ForceMode2D.Impulse);
+
+                //     }
+
+                // }

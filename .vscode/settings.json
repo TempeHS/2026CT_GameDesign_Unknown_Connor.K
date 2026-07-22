@@ -47,7 +47,7 @@
     "csharp.testsCodeLens.enabled": true,
     "csharp.showReferencesCodeLens": true,
     "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Default Dark+",
+    "workbench.colorTheme": "Dark+",
     "window.restoreWindows": "preserve",
     "explorer.compactFolders": false,
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
