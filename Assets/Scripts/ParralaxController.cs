@@ -24,6 +24,7 @@ public class ParralaxController : MonoBehaviour
         float movement = cam.transform.position.x * (1 - parralaxEffect);
 
         transform.position = new Vector3(startPosX + distX, startPosY + distY+(2*(1-parralaxEffect)),transform.position.z);
+
         if (movement > startPosX + length)
         {
             startPosX += length;
