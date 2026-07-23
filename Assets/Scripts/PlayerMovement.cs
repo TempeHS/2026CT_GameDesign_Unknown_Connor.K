@@ -194,13 +194,13 @@ public class PlayerMovement : MonoBehaviour
             {
                Debug.Log("owchies"); 
                playerHealth -= enemy.damage;
-               Player.iFrames = 100;
+               iFrames = 100;
                if(enemy.kbAmount>0){
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(pushDirection * enemy.kbAmount*3, ForceMode2D.Impulse);
                }
                if(enemy.willStun){
-                playerKBTime = 0.2f;
+                playerKBTime = 0.4f;
                }
              
             }
