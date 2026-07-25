@@ -1,0 +1,414 @@
+fileFormatVersion: 2
+guid: ae56061b14dfba3468a11c8f95c2526d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5595469195291949721
+    second: Swaying_Grass_Animation_0
+  - first:
+      213: -1337149478587631641
+    second: Swaying_Grass_Animation_1
+  - first:
+      213: -3856583829180078655
+    second: Swaying_Grass_Animation_2
+  - first:
+      213: -2110528213286212549
+    second: Swaying_Grass_Animation_3
+  - first:
+      213: -8935989604827172949
+    second: Swaying_Grass_Animation_4
+  - first:
+      213: -5480860164601041620
+    second: Swaying_Grass_Animation_5
+  - first:
+      213: -4807517851814595180
+    second: Swaying_Grass_Animation_6
+  - first:
+      213: 7231327952234090304
+    second: Swaying_Grass_Animation_7
+  - first:
+      213: 3964716466536645706
+    second: Swaying_Grass_Animation_8
+  - first:
+      213: 4698667685077336341
+    second: Swaying_Grass_Animation_9
+  - first:
+      213: -2532715164014535576
+    second: Swaying_Grass_Animation_10
+  - first:
+      213: 2310222583841583361
+    second: Swaying_Grass_Animation_11
+  - first:
+      213: -629128340240387686
+    second: Swaying_Grass_Animation_12
+  - first:
+      213: 7367599573867007751
+    second: Swaying_Grass_Animation_13
+  - first:
+      213: -3118548562383074291
+    second: Swaying_Grass_Animation_14
+  - first:
+      213: 1075367325731347942
+    second: Swaying_Grass_Animation_15
+  - first:
+      213: 1794877889994763585
+    second: Swaying_Grass_Animation_16
+  - first:
+      213: 1379487241203972501
+    second: Swaying_Grass_Animation_17
+  - first:
+      213: -4577585570065646203
+    second: Swaying_Grass_Animation_18
+  - first:
+      213: 1067678479263579961
+    second: Swaying_Grass_Animation_19
+  - first:
+      213: -5827475088278308892
+    second: Swaying_Grass_Animation_20
+  - first:
+      213: -1057259719704788132
+    second: Swaying_Grass_Animation_21
+  - first:
+      213: -706974501679252608
+    second: Swaying_Grass_Animation_22
+  - first:
+      213: -1231452180549638631
+    second: Swaying_Grass_Animation_23
+  - first:
+      213: -8600817937557720508
+    second: Swaying_Grass_Animation_24
+  - first:
+      213: 4489130309546551096
+    second: Swaying_Grass_Animation_25
+  - first:
+      213: -6303830434769566929
+    second: Swaying_Grass_Animation_26
+  - first:
+      213: -1231423182555322740
+    second: Swaying_Grass_Animation_27
+  - first:
+      213: 1854751123574879736
+    second: Swaying_Grass_Animation_28
+  - first:
+      213: -732203994363517412
+    second: Swaying_Grass_Animation_29
+  - first:
+      213: -8425304056875903233
+    second: Swaying_Grass_Animation_30
+  - first:
+      213: -4595676068007226282
+    second: Swaying_Grass_Animation_31
+  - first:
+      213: 1801585900637709994
+    second: Swaying_Grass_Animation_32
+  - first:
+      213: -4102293185881610563
+    second: Swaying_Grass_Animation_33
+  - first:
+      213: -9187981728465770785
+    second: Swaying_Grass_Animation_34
+  - first:
+      213: -38352529100210827
+    second: Swaying_Grass_Animation_35
+  - first:
+      213: -4269335390622560060
+    second: Swaying_Grass_Animation_36
+  - first:
+      213: 3407371802538128481
+    second: Swaying_Grass_Animation_37
+  - first:
+      213: -2682857376482883494
+    second: Swaying_Grass_Animation_38
+  - first:
+      213: 1321307671459247174
+    second: Swaying_Grass_Animation_39
+  - first:
+      213: -7897303473384637496
+    second: Swaying_Grass_Animation_40
+  - first:
+      213: -1334759361415381152
+    second: Swaying_Grass_Animation_41
+  - first:
+      213: -7217881936479399529
+    second: Swaying_Grass_Animation_42
+  - first:
+      213: -4612942435357414859
+    second: Swaying_Grass_Animation_43
+  - first:
+      213: 321172641411272005
+    second: Swaying_Grass_Animation_44
+  - first:
+      213: 3153949507065976721
+    second: Swaying_Grass_Animation_45
+  - first:
+      213: 3687925953191637298
+    second: Swaying_Grass_Animation_46
+  - first:
+      213: 7866734745969727936
+    second: Swaying_Grass_Animation_47
+  - first:
+      213: 8635654749101233945
+    second: Swaying_Grass_Animation_48
+  - first:
+      213: -6422423678261638156
+    second: Swaying_Grass_Animation_49
+  - first:
+      213: 611855956802315541
+    second: Swaying_Grass_Animation_50
+  - first:
+      213: -3753362799723183712
+    second: Swaying_Grass_Animation_51
+  - first:
+      213: -6285579365600980545
+    second: Swaying_Grass_Animation_52
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 319
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7658bf6b966e852b0800000000000000
+      internalID: -5595469195291949721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e77f2d32ad717de0800000000000000
+      internalID: -1337149478587631641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c5a43fb079aa7ac0800000000000000
+      internalID: -3856583829180078655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3ca2a6a5c5e5b2e0800000000000000
+      internalID: -2110528213286212549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baf61bf9cccfcf380800000000000000
+      internalID: -8935989604827172949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swaying_Grass_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2dad5918b210f3b0800000000000000
+      internalID: -5480860164601041620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6758454de42b129448fa3ad470e8b08e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Swaying_Grass_Animation_0: -5595469195291949721
+      Swaying_Grass_Animation_1: -1337149478587631641
+      Swaying_Grass_Animation_2: -3856583829180078655
+      Swaying_Grass_Animation_3: -2110528213286212549
+      Swaying_Grass_Animation_4: -8935989604827172949
+      Swaying_Grass_Animation_5: -5480860164601041620
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
