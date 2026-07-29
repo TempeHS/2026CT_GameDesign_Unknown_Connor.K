@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public float playerHealth = 8.0f;
     public int iFrames = 0;
     public float playerKBTime = 0.0f;
+    public float playerAttackCD = 0.0f;
+    public bool grounded = true;
+    public float currentSpeed; 
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -34,12 +37,14 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        currentSpeed = rb.linearVelocity.x;
         dashTime -= Time.deltaTime;
         dashCD -= Time.deltaTime;
         airTime += Time.deltaTime;
         jumpAnimTime -= Time.deltaTime;
         animator.SetFloat("jumpAnimTime", jumpAnimTime);
         playerKBTime -= Time.deltaTime;
+        playerAttackCD -= Time.deltaTime;
         
         if (playerHealth > playerMaxHealth)
         {
@@ -82,17 +87,18 @@ public class PlayerMovement : MonoBehaviour
                     jumpAnimTime= 0.2f;
                     animator.SetTrigger("jumpStart");
                 }
-                
+                grounded=true;
                 airTime = 0.0f;
 
             }
             else
             {
+                grounded=false;
                 animator.SetBool("isGrounded", false);
             }
             
         }
-        if(horizontal != 0)
+        if(horizontal != 0 && currentSpeed > 0.1 || currentSpeed < -0.1)
         {
             if (dashTime < 0)
             {
@@ -111,40 +117,18 @@ public class PlayerMovement : MonoBehaviour
 
 
         flip();
-        
-        
 
+        if(playerKBTime <=0 && playerAttackCD<=0 && grounded){
+            if(Input.GetMouseButtonDown(0)){
+                animator.SetTrigger("attack");
+                Debug.Log("Attack");
+                playerAttackCD = 1.0f;
+            }
+
+        }
+        
         
     }
-    // private void OnCollisionStay2D(Collision2D collision)
-    // {
-    //     checkTags(collision);
-    // }
-    // private void checkTags(Collision2D collision)
-    // {
-    //     foreach (Transform child in collision.transform)
-    //     {
-    //         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    //         if (child.CompareTag("DamagePlayer") && iFrames <= 0)
-    //         {
-    //             playerHealth--;
-    //             iFrames = 100;
-    //         }
-    //         if (child.CompareTag("KnockbackPlayer"))
-    //         {
-    //             Vector3 direction = -(collision.transform.position - transform.position).normalized;
-    //             Vector3 force = direction * 10;
-    //             // Vector2 contactPoint = collision.contacts[0].point;
-    //             // Vector2 pushDirection = (Vector2)transform.position - contactPoint;
-    //             rb.linearVelocity = Vector2.zero;
-    //             playerKBTime = 0.4f;
-    //             // rb.AddForce(pushDirection * 10, ForceMode2D.Impulse);
-    //             rb.AddForce(force, ForceMode2D.Impulse);
-
-    //         }
-
-    //     }
-    // }
     private bool IsGrounded()
     {
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0f, groundLayer);
@@ -168,8 +152,7 @@ public class PlayerMovement : MonoBehaviour
             
         }
         if(Input.GetKey(KeyCode.LeftShift) && dashCD <= 0){
-            
-            Debug.Log("Dash");
+            playerAttackCD = 0.25f;
             animator.SetTrigger("dash");
             dashTime = 0.25f;
             dashCD = 2.0f;
@@ -206,21 +189,3 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 }
-//     Rigidbody2D rb = Player.GetComponent<Rigidbody2D>();
-                //     if (child.CompareTag("DamagePlayer") && Player.iFrames <= 0)
-                //     {
-                //         Player.playerHealth--;
-                //         Player.iFrames = 100;
-                //     }
-                //     if (child.CompareTag("KnockbackPlayer"))
-                //     {
-                //         Vector2 contactPoint = collision.contacts[0].point;
-
-                //         Vector2 pushDirection = ((Vector2)Player.transform.position - contactPoint);
-                //         rb.linearVelocity = Vector2.zero;
-                //         Player.playerKBTime = 0.2f;
-                //         rb.AddForce(pushDirection * 12, ForceMode2D.Impulse);
-
-                //     }
-
-                // }
