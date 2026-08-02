@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if(horizontal != 0 && currentSpeed > 0.1 || currentSpeed < -0.1)
         {
-            if (dashTime < 0)
+            if (dashTime < 0 && horizontal != 0)
             {
                 dashDir = horizontal;
             }

@@ -11,6 +11,7 @@ public class RobotEnemyMovement : MonoBehaviour
     private int curentDir;
     private float halfWidth;
     private Vector2 movement;
+    private bool isFacingRight = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -31,8 +32,24 @@ public class RobotEnemyMovement : MonoBehaviour
     {
         if(Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground")) && rb.linearVelocity.x > 0){
             curentDir *=-1;
+            // spriteRenderer.flipx = true;
         }
-        Debug.DrawRay(transform.position, Vector2.right * (halfWidth * 0.1f), Color.red);
+        else if(Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) && rb.linearVelocity.x < 0){
+            curentDir *=-1;
+            // spriteRenderer.flipx = false;
+        }
+        flip();
 
+    }
+     private void flip()
+    {
+        if ((isFacingRight && curentDir < 0f || !isFacingRight && curentDir > 0f))
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+
+        }
     }
 }
