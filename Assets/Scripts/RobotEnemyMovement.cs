@@ -10,6 +10,7 @@ public class RobotEnemyMovement : MonoBehaviour
 
     private int curentDir;
     private float halfWidth;
+    private float halfHeight;
     private Vector2 movement;
     private bool isFacingRight = false;
 
@@ -17,6 +18,7 @@ public class RobotEnemyMovement : MonoBehaviour
     private void Start()
     {
         halfWidth = spriteRenderer.bounds.extents.x;
+        halfHeight = spriteRenderer.bounds.extents.y;
         curentDir = startDir;
     }
 
@@ -30,13 +32,30 @@ public class RobotEnemyMovement : MonoBehaviour
     }
     private void SetDir()
     {
-        if(Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground")) && rb.linearVelocity.x > 0){
+        Vector2 rightPos = transform.position;
+        Vector2 leftPos = transform.position;
+        rightPos.x += halfWidth;
+        leftPos.x -= halfWidth;
+
+        if(rb.linearVelocity.x > 0){
+            if(Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground"))){
             curentDir *=-1;
             // spriteRenderer.flipx = true;
-        }
-        else if(Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) && rb.linearVelocity.x < 0){
+            }
+            else if(!Physics2D.Raycast(rightPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
+                curentDir *=-1;
+            }
+
+        } 
+        else if(rb.linearVelocity.x < 0){
+            if(Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) ){
             curentDir *=-1;
             // spriteRenderer.flipx = false;
+            }
+            else if(!Physics2D.Raycast(leftPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
+                curentDir *=-1;
+            }
+            
         }
         flip();
 
