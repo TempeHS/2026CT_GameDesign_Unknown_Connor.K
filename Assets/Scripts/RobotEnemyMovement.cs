@@ -8,12 +8,13 @@ public class RobotEnemyMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private int startDir = 1;
 
+
     private int curentDir;
     private float halfWidth;
     private float halfHeight;
     private Vector2 movement;
     private bool isFacingRight = false;
-
+    private bool isGrounded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -30,8 +31,26 @@ public class RobotEnemyMovement : MonoBehaviour
         rb.linearVelocity =  movement;
         SetDir();
     }
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded=true;
+
+        }
+        else{
+            isGrounded=false;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        
+        isGrounded=false;
+
+    }
     private void SetDir()
     {
+        if(!isGrounded) return;
         Vector2 rightPos = transform.position;
         Vector2 leftPos = transform.position;
         rightPos.x += halfWidth;
