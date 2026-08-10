@@ -4,10 +4,13 @@ public class RobotEnemyMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerMovement Player;
+    [SerializeField] private Animator animator;
 
     [SerializeField] private float speed = 3f;
     [SerializeField] private int startDir = 1;
     [SerializeField] private bool stayOnLedges = true;
+    private Vector2 attackCheckSize = new Vector2(1.75f, 21.4f);
 
 
     private int curentDir;
@@ -17,6 +20,8 @@ public class RobotEnemyMovement : MonoBehaviour
     private bool isFacingRight = false;
     private bool isGrounded;
     private bool seePlayer;
+    private float atkChargeTime;
+    public GameObject robotAttackBox;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -28,10 +33,28 @@ public class RobotEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        movement.x = speed * curentDir;
+        atkChargeTime -= Time.deltaTime;
+        if (atkChargeTime < 0)
+        {
+            movement.x = speed * curentDir;
+        }
+        else
+        {
+            movement.x = 0.0f;
+        }
+        
         movement.y = rb.linearVelocity.y;
         rb.linearVelocity =  movement;
         SetDir();
+        if (atkChargeTime<0.2f && atkChargeTime >0.0f)
+        {
+            robotAttackBox.SetActive(true);
+        }
+        else
+        {
+            robotAttackBox.SetActive(false);
+        }
+        
     }
     private void OnCollisionStay2D(Collision2D other)
     {
@@ -53,24 +76,63 @@ public class RobotEnemyMovement : MonoBehaviour
     private void SetDir()
     {
         if(!isGrounded) return;
-        if(seePlayer) return;
+        if (atkChargeTime>0)
+        {
+            return;
+        }
         Vector2 rightPos = transform.position;
         Vector2 leftPos = transform.position;
         rightPos.x += halfWidth;
         leftPos.x -= halfWidth;
 
-        if(rb.linearVelocity.x > 0){
-            if(Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground"))){
+
+        if (CheckEnemies())
+        {
+            if(transform.position.x > Player.transform.position.x)
+            {
+                curentDir = -1;
+                atkChargeTime = 0.7f;
+                animator.SetTrigger("attack");
+            }
+            if (transform.position.x < Player.transform.position.x)
+            {
+                curentDir = 1;
+                atkChargeTime = 0.7f;
+                animator.SetTrigger("attack");
+            }
+            stayOnLedges = false;
+
+        }
+        else
+        {
+            stayOnLedges = true;
+        }
+        if (rb.linearVelocity.x > 0){
+
+            //if (Physics2D.Raycast(transform.position, Vector2.right, 0.7f, LayerMask.GetMask("Player")))
+            //{
+            //    atkChargeTime = 0.7f;
+            //    animator.SetTrigger("attack");
+
+            //}
+            if (Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground"))){
             curentDir *=-1;
             // spriteRenderer.flipx = true;
             }
             else if(stayOnLedges && !Physics2D.Raycast(rightPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
                 curentDir *=-1;
             }
+            
 
         } 
         else if(rb.linearVelocity.x < 0){
-            if(Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) ){
+
+            //if (Physics2D.Raycast(transform.position, Vector2.left, 0.7f, LayerMask.GetMask("Player")))
+            //{
+            //    atkChargeTime = 0.7f;
+            //    animator.SetTrigger("attack");
+            //}
+            if (Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) ){
             curentDir *=-1;
             // spriteRenderer.flipx = false;
             }
@@ -78,6 +140,7 @@ public class RobotEnemyMovement : MonoBehaviour
                 curentDir *=-1;
             }
             
+
         }
         flip();
 
@@ -92,5 +155,9 @@ public class RobotEnemyMovement : MonoBehaviour
             transform.localScale = localScale;
 
         }
+    }
+    private bool CheckEnemies()
+    {
+        return Physics2D.OverlapBox(transform.position, attackCheckSize, 0.0f, LayerMask.GetMask("Player"));
     }
 }

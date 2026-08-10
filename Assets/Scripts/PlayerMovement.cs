@@ -10,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private float airTime = 0.0f;
     private float jumpAnimTime = 0.0f;
     private float dashDir = 1;
-    private Vector2 groundCheckSize = new Vector2(0.45f , 0.1f);
+    private Vector2 groundCheckSize = new Vector2(0.45f, 0.1f);
     private Vector2 queueCheckSize = new Vector2(0.45f, 2f);
     public float dashMaxCd = 2.5f;
-    public float dashCD= 0.0f;
+    public float dashCD = 0.0f;
     private float dashTime = 0.0f;
     public float playerMaxHealth = 8.0f;
     public float playerHealth = 8.0f;
@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerKBTime = 0.0f;
     public float playerAttackCD = 0.0f;
     public bool grounded = true;
-    public float currentSpeed; 
+    public float currentSpeed;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("jumpAnimTime", jumpAnimTime);
         playerKBTime -= Time.deltaTime;
         playerAttackCD -= Time.deltaTime;
-        
+
         if (playerHealth > playerMaxHealth)
         {
             playerHealth = playerMaxHealth;
@@ -58,16 +58,17 @@ public class PlayerMovement : MonoBehaviour
         {
             iFrames = 0;
         }
-        if(playerKBTime<=0)
+        if (playerKBTime <= 0)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
 
-            if(Input.GetButtonDown("Jump") && IsGrounded())
+            if (Input.GetButtonDown("Jump") && IsGrounded())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
                 jumpAnimTime = 0.2f;
                 animator.SetTrigger("jumpStart");
-            } else if(Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
+            }
+            else if (Input.GetButtonDown("Jump") && Buffer() && rb.linearVelocity.y < 0)
             {
                 jumpQueued = true;
             }
@@ -75,8 +76,8 @@ public class PlayerMovement : MonoBehaviour
             // {
             //     rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y *0.5f);
             // }
-            
-            if(IsGrounded())
+
+            if (IsGrounded())
             {
                 animator.SetBool("isGrounded", true);
                 animator.SetBool("isFalling", false);
@@ -84,21 +85,21 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
                     jumpQueued = false;
-                    jumpAnimTime= 0.2f;
+                    jumpAnimTime = 0.2f;
                     animator.SetTrigger("jumpStart");
                 }
-                grounded=true;
+                grounded = true;
                 airTime = 0.0f;
 
             }
             else
             {
-                grounded=false;
+                grounded = false;
                 animator.SetBool("isGrounded", false);
             }
-            
+
         }
-        if(horizontal != 0 && currentSpeed > 0.1 || currentSpeed < -0.1)
+        if (horizontal != 0 && currentSpeed > 0.1 || currentSpeed < -0.1)
         {
             if (dashTime < 0 && horizontal != 0)
             {
@@ -110,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
-        if (airTime > 0.3f) 
+        if (airTime > 0.3f)
         {
             animator.SetBool("isFalling", true);
         }
@@ -118,21 +119,23 @@ public class PlayerMovement : MonoBehaviour
 
         flip();
 
-        if(playerKBTime <=0 && playerAttackCD<=0 && grounded){
-            if(Input.GetMouseButtonDown(0)){
+        if (playerKBTime <= 0 && playerAttackCD <= 0 && grounded)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
                 animator.SetTrigger("attack");
-                Debug.Log("Attack");
+
                 playerAttackCD = 1.0f;
             }
 
         }
-        
-        
+
+
     }
     private bool IsGrounded()
     {
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0f, groundLayer);
-        
+
     }
     private bool Buffer()
     {
@@ -140,18 +143,20 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(playerKBTime<=0)
+        if (playerKBTime <= 0)
         {
-            if(dashTime>0){
+            if (dashTime > 0)
+            {
                 rb.linearVelocity = new Vector2(dashDir * 30, 0.1f);
             }
             else
             {
                 rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
             }
-            
+
         }
-        if(Input.GetKey(KeyCode.LeftShift) && dashCD <= 0){
+        if (Input.GetKey(KeyCode.LeftShift) && dashCD <= 0)
+        {
             playerAttackCD = 0.25f;
             animator.SetTrigger("dash");
             dashTime = 0.25f;
@@ -160,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void flip()
     {
-        if ((isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) && dashTime <=0f)
+        if ((isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) && dashTime <= 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -169,23 +174,52 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-        private void OnCollisionEnter2D(Collision2D collision){
-            Vector2 contactPoint = collision.contacts[0].point;
-            Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
-            HazardTagApplier enemy = collision.gameObject.GetComponent<HazardTagApplier>();
-            if(enemy != null)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 contactPoint = collision.contacts[0].point;
+        Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
+        HazardTagApplier enemy = collision.gameObject.GetComponent<HazardTagApplier>();
+        if (enemy != null)
+        {
+
+            playerHealth -= enemy.damage;
+            animator.SetTrigger("flashRed");
+            iFrames = 100;
+            if (enemy.kbAmount > 0)
             {
-               Debug.Log("owchies"); 
-               playerHealth -= enemy.damage;
-               iFrames = 100;
-               if(enemy.kbAmount>0){
                 rb.linearVelocity = Vector2.zero;
-                rb.AddForce(pushDirection * enemy.kbAmount*3, ForceMode2D.Impulse);
-               }
-               if(enemy.willStun){
-                playerKBTime = 0.4f;
-               }
-             
+                rb.AddForce(pushDirection * enemy.kbAmount * 3, ForceMode2D.Impulse);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x *1.5f, rb.linearVelocity.y);
             }
+            if (enemy.willStun)
+            {
+                playerKBTime = 0.4f;
+            }
+
         }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        Vector2 pushDirection = ((Vector2)transform.position - (Vector2)other.transform.position);
+        HazardTagApplier enemy = other.gameObject.GetComponent<HazardTagApplier>();
+        if (enemy != null)
+        {
+
+            playerHealth -= enemy.damage;
+            animator.SetTrigger("flashRed");
+            iFrames = 100;
+            if (enemy.kbAmount > 0)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(pushDirection * enemy.kbAmount * 3, ForceMode2D.Impulse);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x *1.5f, rb.linearVelocity.y);
+            }
+            if (enemy.willStun)
+            {
+                playerKBTime = 0.4f;
+            }
+
+        }
+    }
 }
