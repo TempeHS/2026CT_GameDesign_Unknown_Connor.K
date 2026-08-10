@@ -7,6 +7,7 @@ public class RobotEnemyMovement : MonoBehaviour
 
     [SerializeField] private float speed = 3f;
     [SerializeField] private int startDir = 1;
+    [SerializeField] private bool stayOnLedges = true;
 
 
     private int curentDir;
@@ -15,6 +16,7 @@ public class RobotEnemyMovement : MonoBehaviour
     private Vector2 movement;
     private bool isFacingRight = false;
     private bool isGrounded;
+    private bool seePlayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -51,6 +53,7 @@ public class RobotEnemyMovement : MonoBehaviour
     private void SetDir()
     {
         if(!isGrounded) return;
+        if(seePlayer) return;
         Vector2 rightPos = transform.position;
         Vector2 leftPos = transform.position;
         rightPos.x += halfWidth;
@@ -61,7 +64,7 @@ public class RobotEnemyMovement : MonoBehaviour
             curentDir *=-1;
             // spriteRenderer.flipx = true;
             }
-            else if(!Physics2D.Raycast(rightPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
+            else if(stayOnLedges && !Physics2D.Raycast(rightPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
                 curentDir *=-1;
             }
 
@@ -71,7 +74,7 @@ public class RobotEnemyMovement : MonoBehaviour
             curentDir *=-1;
             // spriteRenderer.flipx = false;
             }
-            else if(!Physics2D.Raycast(leftPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
+            else if(stayOnLedges && !Physics2D.Raycast(leftPos, Vector2.down, halfHeight +0.1f, LayerMask.GetMask("Ground"))){
                 curentDir *=-1;
             }
             
