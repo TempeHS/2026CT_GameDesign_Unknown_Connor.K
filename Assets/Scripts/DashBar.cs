@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DashBar : MonoBehaviour
 {
-    private float maxDashCD = 2.0f;
+    private float maxDashCD = 1.2f;
     private float playerDashCD;
     private float fillamount;
 

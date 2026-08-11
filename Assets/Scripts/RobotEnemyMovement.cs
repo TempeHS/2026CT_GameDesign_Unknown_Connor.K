@@ -10,7 +10,7 @@ public class RobotEnemyMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private int startDir = 1;
     [SerializeField] private bool stayOnLedges = true;
-    private Vector2 attackCheckSize = new Vector2(1.75f, 21.4f);
+    private Vector2 attackCheckSize = new Vector2(1.5f, 1.4f);
 
 
     private int curentDir;

@@ -11,8 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpAnimTime = 0.0f;
     private float dashDir = 1;
     private Vector2 groundCheckSize = new Vector2(0.45f, 0.1f);
-    private Vector2 queueCheckSize = new Vector2(0.45f, 2f);
-    public float dashMaxCd = 2.5f;
+    private Vector2 queueCheckSize = new Vector2(0.45f, 2f);    
     public float dashCD = 0.0f;
     private float dashTime = 0.0f;
     public float playerMaxHealth = 8.0f;
@@ -125,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 animator.SetTrigger("attack");
 
-                playerAttackCD = 1.0f;
+                playerAttackCD = 0.6f;
             }
 
         }
@@ -160,12 +159,12 @@ public class PlayerMovement : MonoBehaviour
             playerAttackCD = 0.25f;
             animator.SetTrigger("dash");
             dashTime = 0.25f;
-            dashCD = 2.0f;
+            dashCD = 1.2f;
         }
     }
     private void flip()
     {
-        if ((isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) && dashTime <= 0f)
+        if ((isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) && dashTime <= 0f && playerAttackCD<=0.0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -194,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(pushDirection * enemy.kbAmount*1.5f, ForceMode2D.Impulse);
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x , rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x , rb.linearVelocity.y+2);
             }
             if (enemy.willStun)
             {
@@ -223,11 +222,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(pushDirection * enemy.kbAmount *1.5f, ForceMode2D.Impulse);
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y+2);
             }
             if (enemy.willStun)
             {
-                playerKBTime = 0.4f;
+                playerKBTime = 0.3f;
             }
 
         }
