@@ -46,7 +46,7 @@ public class RobotEnemyMovement : MonoBehaviour
         movement.y = rb.linearVelocity.y;
         rb.linearVelocity =  movement;
         SetDir();
-        if (atkChargeTime<0.2f && atkChargeTime >0.0f)
+        if (atkChargeTime<0.2f && atkChargeTime >0.1f)
         {
             robotAttackBox.SetActive(true);
         }

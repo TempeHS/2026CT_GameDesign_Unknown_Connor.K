@@ -178,18 +178,52 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 contactPoint = collision.contacts[0].point;
         Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
+        pushDirection.x = GetDirection(contactPoint);
         HazardTagApplier enemy = collision.gameObject.GetComponent<HazardTagApplier>();
         if (enemy != null)
         {
 
             playerHealth -= enemy.damage;
-            animator.SetTrigger("flashRed");
+            if (enemy.flashRed)
+            {
+                animator.SetTrigger("flashRed");
+            }
+            
             iFrames = 100;
             if (enemy.kbAmount > 0)
             {
                 rb.linearVelocity = Vector2.zero;
-                rb.AddForce(pushDirection * enemy.kbAmount * 3, ForceMode2D.Impulse);
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x *1.5f, rb.linearVelocity.y);
+                rb.AddForce(pushDirection * enemy.kbAmount*1.5f, ForceMode2D.Impulse);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x , rb.linearVelocity.y);
+            }
+            if (enemy.willStun)
+            {
+                playerKBTime = 0.2f;
+            }
+
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Vector2 contactPoint = other.ClosestPoint(transform.position);
+        Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
+        pushDirection.x = GetDirection(contactPoint);
+        HazardTagApplier enemy = other.gameObject.GetComponent<HazardTagApplier>();
+        if (enemy != null)
+        {
+
+            playerHealth -= enemy.damage;
+            if (enemy.flashRed)
+            {
+                animator.SetTrigger("flashRed");
+            }
+            
+            iFrames = 100;
+            if (enemy.kbAmount > 0)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(pushDirection * enemy.kbAmount *1.5f, ForceMode2D.Impulse);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
             }
             if (enemy.willStun)
             {
@@ -198,28 +232,19 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
+    private int GetDirection(Vector2 collider)
     {
-        
-        Vector2 pushDirection = ((Vector2)transform.position - (Vector2)other.transform.position);
-        HazardTagApplier enemy = other.gameObject.GetComponent<HazardTagApplier>();
-        if (enemy != null)
+        if(transform.position.x > collider.x)
         {
-
-            playerHealth -= enemy.damage;
-            animator.SetTrigger("flashRed");
-            iFrames = 100;
-            if (enemy.kbAmount > 0)
-            {
-                rb.linearVelocity = Vector2.zero;
-                rb.AddForce(pushDirection * enemy.kbAmount * 3, ForceMode2D.Impulse);
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x *1.5f, rb.linearVelocity.y);
-            }
-            if (enemy.willStun)
-            {
-                playerKBTime = 0.4f;
-            }
-
+            return 1;
+        }
+        if (transform.position.x < collider.x)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
         }
     }
 }

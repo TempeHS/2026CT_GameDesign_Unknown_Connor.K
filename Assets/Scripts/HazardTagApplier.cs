@@ -6,6 +6,7 @@ public class HazardTagApplier : MonoBehaviour
     public float kbAmount;
     public float damage;
     public bool willStun;
+    public bool flashRed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
