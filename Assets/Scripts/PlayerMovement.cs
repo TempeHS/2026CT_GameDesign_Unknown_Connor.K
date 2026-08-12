@@ -19,8 +19,10 @@ public class PlayerMovement : MonoBehaviour
     public int iFrames = 0;
     public float playerKBTime = 0.0f;
     public float playerAttackCD = 0.0f;
+    private float playerAttackTime=0.0f;
     public bool grounded = true;
     public float currentSpeed;
+    public GameObject playerAttackBox;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("jumpAnimTime", jumpAnimTime);
         playerKBTime -= Time.deltaTime;
         playerAttackCD -= Time.deltaTime;
+        playerAttackTime -= Time.deltaTime;
 
         if (playerHealth > playerMaxHealth)
         {
@@ -118,15 +121,24 @@ public class PlayerMovement : MonoBehaviour
 
         flip();
 
-        if (playerKBTime <= 0 && playerAttackCD <= 0 && grounded)
+        if (playerKBTime <= 0 && playerAttackCD <= 0 )
         {
             if (Input.GetMouseButtonDown(0))
             {
                 animator.SetTrigger("attack");
+                playerAttackTime=0.4f;
 
                 playerAttackCD = 0.6f;
             }
 
+        }
+        if (playerAttackTime<0.2f && playerAttackTime >0.1f)
+        {
+            playerAttackBox.SetActive(true);
+        }
+        else
+        {
+            playerAttackBox.SetActive(false);
         }
 
 

@@ -10,6 +10,7 @@ public class RobotEnemyMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private int startDir = 1;
     [SerializeField] private bool stayOnLedges = true;
+    [SerializeField] private ParticleSystem RobotDeath;
     private Vector2 attackCheckSize = new Vector2(1.5f, 1.4f);
 
 
@@ -22,6 +23,8 @@ public class RobotEnemyMovement : MonoBehaviour
     private bool seePlayer;
     private float atkChargeTime;
     public GameObject robotAttackBox;
+    public float enemyHealth = 3.0f;
+    public float enemyKBTime = 0.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -33,8 +36,15 @@ public class RobotEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(enemyHealth<=0.0f){
+            RobotDeath.transform.position = rb.transform.position;
+            RobotDeath.Play();
+            Destroy(gameObject); 
+
+        }
         atkChargeTime -= Time.deltaTime;
-        if (atkChargeTime < 0)
+        enemyKBTime -= Time.deltaTime;
+        if (atkChargeTime < 0 && enemyKBTime<=0.0f)
         {
             movement.x = speed * curentDir;
         }
@@ -159,5 +169,48 @@ public class RobotEnemyMovement : MonoBehaviour
     private bool CheckEnemies()
     {
         return Physics2D.OverlapBox(transform.position, attackCheckSize, 0.0f, LayerMask.GetMask("Player"));
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Vector2 contactPoint = other.ClosestPoint(transform.position);
+        Vector2 pushDirection = ((Vector2)transform.position - contactPoint);
+        pushDirection.x = GetDirection(contactPoint);
+        PlayerDamageTags player = other.gameObject.GetComponent<PlayerDamageTags>();
+        if (player != null)
+        {
+
+            enemyHealth -= player.damage;
+            if (player.flashRed)
+            {
+                animator.SetTrigger("flashRed");
+            }
+            
+            if (player.kbAmount > 0)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(pushDirection * player.kbAmount *1.5f, ForceMode2D.Impulse);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y+2);
+            }
+            if (player.willStun)
+            {
+                enemyKBTime = 0.3f;
+            }
+
+        }
+    }
+    private int GetDirection(Vector2 collider)
+    {
+        if(transform.position.x > collider.x)
+        {
+            return 1;
+        }
+        if (transform.position.x < collider.x)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
     }
 }
