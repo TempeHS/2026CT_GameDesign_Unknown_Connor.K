@@ -4,7 +4,9 @@ using UnityEngine.InputSystem;
 public class InteractionDetector : MonoBehaviour
 {   
     public Transform player;
-    public IInteractable interactableInRange = null; // closest interactable
+    public IInteractable interactableInRange = null;
+    public GameObject interactableObject=null;
+    public float interactableInRangeDist = 999999.9999f; // closest interactable
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,13 +36,20 @@ public class InteractionDetector : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent( out IInteractable interactable ) && interactable.canInteract())
         {
-            interactableInRange?.unoutline();
-            interactableInRange = interactable;
-            interactableInRange?.outline();
+            float collisionRange = Vector2.Distance(transform.position, collision.transform.position);
+            if(interactableInRangeDist> collisionRange){
+                interactableInRange?.unoutline();
+                interactableInRange = interactable;
+                interactableInRange?.outline();
+                interactableObject=collision.gameObject;
+                
+            }
+            interactableInRangeDist = Vector2.Distance(transform.position, interactableObject.transform.position);
+            
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
