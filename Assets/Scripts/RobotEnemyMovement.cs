@@ -25,6 +25,7 @@ public class RobotEnemyMovement : MonoBehaviour
     public GameObject robotAttackBox;
     public float enemyHealth = 3.0f;
     public float enemyKBTime = 0.0f;
+    public bool isAlive = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -39,7 +40,8 @@ public class RobotEnemyMovement : MonoBehaviour
         if(enemyHealth<=0.0f){
             RobotDeath.transform.position = rb.transform.position;
             RobotDeath.Play();
-            Destroy(gameObject); 
+            isAlive = false;
+            gameObject.SetActive(false); 
 
         }
         atkChargeTime -= Time.deltaTime;

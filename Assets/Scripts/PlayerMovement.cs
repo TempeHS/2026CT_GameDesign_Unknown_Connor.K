@@ -258,4 +258,20 @@ public class PlayerMovement : MonoBehaviour
             return 1;
         }
     }
+
+
+    public void Save(ref PlayerSaveData data)
+    {
+        data.position = transform.position;
+    }
+    public void load( PlayerSaveData data)
+    {
+        transform.position = data.position;
+    }
+}
+
+[System.Serializable]
+public struct PlayerSaveData
+{
+    public Vector3 position;
 }

@@ -32,7 +32,7 @@ public class InteractionDetector : MonoBehaviour
             transform.position = player.position;
 
         }
-        Debug.Log(interactableInRange);
+        //Debug.Log(interactableInRange);
 
     }
 
