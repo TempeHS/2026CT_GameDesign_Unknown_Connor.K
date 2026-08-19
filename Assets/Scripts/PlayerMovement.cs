@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded = true;
     public float currentSpeed;
     public GameObject playerAttackBox;
+    public bool isDead = false;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -38,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        if(isDead) return;
+        
         currentSpeed = rb.linearVelocity.x;
         dashTime -= Time.deltaTime;
         dashCD -= Time.deltaTime;
@@ -140,6 +143,11 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAttackBox.SetActive(false);
         }
+        if(playerHealth<=0.0f){
+            animator.SetTrigger("death");
+            isDead = true;
+            rb.linearVelocity = Vector2.zero;
+        }
 
 
     }
@@ -154,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(isDead) return;
         if (playerKBTime <= 0)
         {
             if (dashTime > 0)
